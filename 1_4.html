@@ -6,61 +6,32 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/flick/jquery-ui.css" />
 	<link href="style.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8"/>
 </head>
 
 <body>
-  <div>
+	<p>
+	<a class="telugu" href="#idi">idi</a> 
+	<a class="telugu" href="#maMci">maṃci</a> 
+	<a class="telugu" href="#pilli">pilli</a>.
+	</p>
+	
+	
+	<div id="eng_trans" class="english" style="visibility:hidden">
+	This is a nice cat.
+	</div> 
 
-		<p>
-		<a class="telugu" href="#idi">idi</a> 
-		<a class="telugu" href="#maMci">maṃci</a> 
-		<a class="telugu" href="#pilli">pilli.</a>
-		</p>
-		
-		<p>
-		<br>
-		<img src="cat.png" length="317" width="375" alt="a cat"></img>	
-		<br>
-		<a href="1_3.html">Prev</a>
-		<a href="1_5.html">Next</a>
-		<a href="home.html">Home</a>
-		</p>
+	<img src="cat.png" length="317" width="375" alt="a cat"></img>
 
-	</div>
+	<br>
+ 	<button onclick="showEnglish()">English Translation</button>
+	<br>
+	<a href="1_3.html" class="nav">Prev</a>
+	<a href="1_5.html" class="nav">Next</a>
+	<a href="home.html" class="nav">Home</a>
+	</p>
+
 	<div id="dialog" title=""></div>
-	
-	<address>
-	Last updated on August 11, 2021<br>
-	</address>
-
-  <script type="text/javascript">
-	var words = {
-		"idi": "this (is)",
-		"pilli": "(a) cat",
-		"maMci": "nice"
-	};
-	var elems = document.getElementsByTagName("a");
-
-	function getKeyByValue(object, value) {
-		return Object.keys(object).find(key => object[key] === value);
-	}
-	
-	Array.prototype.slice.call(elems).forEach(function(el) {
-		el.onclick = function(e) {
-			var engword = words[this.hash.slice(1)]; // Telugu word
-			var tgword = getKeyByValue(words, engword); // Its English translation
-			var found = !(tgword in words); // prevents a popup from showing when a link is clicked
-			if (found) return;
-			else {
-				tgword = tgword.replaceAll('M','ṃ');
-				$("#dialog").dialog({
-					"modal": true,
-					title: "Definition of " + "\"" + tgword +  "\"",
-					"width": 500
-				}).html(engword);	
-			}
-  	}
-	})
-  </script>
+	<script src="script.js"></script>	
 </body>
 </html>
