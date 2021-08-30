@@ -1,3 +1,6 @@
+// This script file houses all the js needed to make the site run
+// Requires jquery and jquery ui
+
 var words = {
 	// Words are organized in the order they appear
 	"idi": "this (is)",
@@ -19,7 +22,7 @@ function showEnglish() {
 	}
 }
 
-// The code below makes a definition pop up when a word is clicked
+// Make a definition pop up when a word is clicked
 var elems = document.getElementsByTagName("a");
 function getKeyByValue(object, value) {
 	return Object.keys(object).find(key => object[key] === value);
@@ -31,6 +34,8 @@ Array.prototype.slice.call(elems).forEach(function(el) {
 		var found = !(tgword in words); // prevents a popup from showing when a link is clicked
 		if (found) return;
 		else {
+			tgword = tgword.replaceAll('A','ā');
+			tgword = tgword.replaceAll('M','ṃ');
 			$("#dialog").dialog({
 				"modal": true,
 				title: "Definition of " + "\"" + tgword +  "\"",
@@ -39,3 +44,18 @@ Array.prototype.slice.call(elems).forEach(function(el) {
 		}
 	}
 })
+
+// Play sounds when element clicked
+var clip = new Audio();
+function playAudio(url) {
+	console.log("playing");
+	if (!clip.paused) return;
+	clip = new Audio(url);
+	clip.play();
+}
+
+// Plays audio that coresponds to each file. EACH AUDIO FILE HAS TO HAVE THE SAME FILE NAME AS ITS RESPECTIVE HTML FILE!!!
+function correspondingAudio(path_to_file) {
+	var filename = (path_to_file.split("/").pop()).slice(0, -5);
+	playAudio("sounds/" + filename + ".m4a");
+}
