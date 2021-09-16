@@ -20,8 +20,8 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	line-height: 1.5;
-	font-size: 22px;
-	font-family: "DejaVu Serif";
+	font-size: 24px;
+	font-family: "Georgia";
 	background-color: #fbf7dc;
 	color: #444;
 }
@@ -30,12 +30,16 @@ button {
   background: none!important;
   border: none;
   padding: 0!important;
-	font-family: "DejaVu Serif";
-	font-size: 22px;
+	font-family: "Georgia";
+	font-size: 24px;
   color: blue;
   text-decoration: underline;
   cursor: pointer;
 }
 .nav {
 	color: blue;
+}
+
+footer {
+	text-align: center;	
 }
