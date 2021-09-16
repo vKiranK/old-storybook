@@ -1,6 +1,7 @@
-Make size of dog 300x300; the file formats and sizes for all images need to be standardized
+Create a roadmap for the project
+Make size of dog 300x300; the file formats and sizes for all images needs to be standardized
 Add left/right arrow key navigation (using the mouse is annoying)
 Make a webpage template
-Add audio to all sentences
-Add philosophy, extra info, about, TODO pages
-Add footers to pages
+DONE Add audio to all sentences
+DONE Add philosophy, extra info, about, TODO pages
+DONE Add footers to pages
