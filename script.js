@@ -9,7 +9,14 @@ var words = {
 	"pilli": "(a) cat",
 	"nA": "? (this word indicates a question)",
 	"Avunu": "yes",
-	"kAdu": "not"
+	"kAdu": "not",
+	"gandhi": "Gandhi (an Indian name)",
+	"indirA": "Indira (an Indian name)",
+	"Iyana": "he (is)",
+	"IviDa": "she (is)",
+	"Ime": "she (is)",
+	"kiraN": "Kiran (an Indian name)",
+	"evaru": "who"
 };
 
 function showEnglish() {
@@ -34,7 +41,11 @@ Array.prototype.slice.call(elems).forEach(function(el) {
 		var found = !(tgword in words); // prevents a popup from showing when a link is clicked
 		if (found) return;
 		else {
+			// Add diacritics
 			tgword = tgword.replaceAll('A','ā');
+			tgword = tgword.replaceAll('I','ī');
+			tgword = tgword.replaceAll('D','ḍ');
+			tgword = tgword.replaceAll('N','ṇ');
 			tgword = tgword.replaceAll('M','ṃ');
 			$("#dialog").dialog({
 				"modal": true,
@@ -46,16 +57,22 @@ Array.prototype.slice.call(elems).forEach(function(el) {
 })
 
 // Play sounds when element clicked
-var clip = new Audio();
+var	clip = new Audio();
 function playAudio(url) {
-	console.log("playing");
-	if (!clip.paused) return;
+	if (!clip.paused) {
+		console.log("could not play... other audio file is currently playing");
+		return;
+	}
+	console.log("playing " + url + "...");
 	clip = new Audio(url);
 	clip.play();
 }
 
-// Plays audio that coresponds to each file. EACH AUDIO FILE HAS TO HAVE THE SAME FILE NAME AS ITS RESPECTIVE HTML FILE!!!
+// Plays audio that coresponds to each file.
+// EACH AUDIO FILE HAS TO HAVE THE SAME FILE NAME AS ITS RESPECTIVE HTML FILE!!!
 function correspondingAudio(path_to_file) {
 	var filename = (path_to_file.split("/").pop()).slice(0, -5);
-	playAudio("sounds/" + filename + ".m4a");
+	var filepath = "sounds/" + filename + ".m4a";
+	console.log("playing audio at path " + filepath);
+	playAudio(filepath);
 }
