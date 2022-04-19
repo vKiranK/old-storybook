@@ -1,0 +1,251 @@
+
+// This script file houses additional javascript features; they are handy but the site can be used without them
+// Features include: left/right navigation, definition popups
+// Requires jquery and jquery ui
+
+var words = {
+	// Words are organized in the order they appear
+	"idi": "this (is)",
+	"kukka": "(a) dog",
+	"maYci": "nice",
+	"pilli": "(a) cat",
+	"nA": "? (this word indicates a question)",
+	"Avunu": "yes",
+	"kAdu": "not",
+	"gAndhi": "Gandhi ",
+	"indirA": "Indira (former Indian prime minister)",
+	"Iyana": "he (is)",
+	"IviDa": "she (is)",
+	"Ime": "she (is)",
+	"kiraN": "Kiran (an Indian name)",
+	"evaru": "who",
+	"tiNTunAru": " is eating",
+	"tiNTundi": "is eating",
+	"tiNTunArA": " is eating?",
+	"tiNTundA": " is eating?",
+	"Amir": "Aamir (an Indian name)",
+	"pustakam": "a book",
+	"I": "this",
+	"pEru": "name",
+	"kukka2": "dog's",
+	"EmiTI": "what is",
+	"idi2": "she",
+	"pilli2": "cat's",
+	"vijaya": "Vijaya (an Indian name)",
+	"nikki": "Nikki (an Indian name)"
+
+};
+
+var isExDone = true;
+
+function showEnglish() {
+	var d = document.getElementById("eng_trans");
+	if (d.style.display === "none") {
+		d.style.display = "block";
+	}
+	else {
+		d.style.display = "none";
+	}
+}
+
+// Make a definition pop up when a word is clicked
+var elems = document.getElementsByTagName("a");
+function getKeyByValue(object, value) {
+	return Object.keys(object).find(key => object[key] === value);
+}
+Array.prototype.slice.call(elems).forEach(function(el) {
+	el.onclick = function(e) {
+		var engword = words[this.hash.slice(1)]; // Telugu word
+		var tgword = getKeyByValue(words, engword); // Its English translation
+		var found = !(tgword in words); // prevents a popup from showing when a link is clicked
+		if (found) return;
+		else {
+			// Add diacritics
+			tgword = tgword.replaceAll('A','ā');
+			tgword = tgword.replaceAll('I','ī');
+			tgword = tgword.replaceAll('E','ē');
+			tgword = tgword.replaceAll('D','ḍ');
+			tgword = tgword.replaceAll('N','ṇ');
+			tgword = tgword.replaceAll('Y','ñ');
+			tgword = tgword.replaceAll('T','ṭ');
+			tgword = tgword.replaceAll('L','ḷ');
+			tgword = tgword.replaceAll('M','ṁ');
+			tgword = tgword.replaceAll('Y','ñ');
+
+			// remove any numbers
+			tgword = tgword.replaceAll('0','');
+			tgword = tgword.replaceAll('1','');
+			tgword = tgword.replaceAll('2','');
+			tgword = tgword.replaceAll('3','');
+			tgword = tgword.replaceAll('4','');
+			tgword = tgword.replaceAll('5','');
+			tgword = tgword.replaceAll('6','');
+			tgword = tgword.replaceAll('7','');
+			tgword = tgword.replaceAll('8','');
+			tgword = tgword.replaceAll('9','');
+			$("#dialog").dialog({
+				"modal": true,
+				title: "Definition of " + "\"" + tgword +  "\"",
+				"width": 500
+			}).html(engword);	
+		}
+	}
+})
+
+// Play sounds when element clicked
+var	clip = new Audio();
+function playAudio(url) {
+	if (!clip.paused) {
+		//console.log("could not play... other audio file is currently playing");
+		return;
+	}
+	//console.log("playing " + url + "...");
+	clip = new Audio(url);
+	clip.play();
+}
+
+// Plays audio that coresponds to each file.
+// EACH AUDIO FILE HAS TO HAVE THE SAME FILE NAME AS ITS RESPECTIVE HTML FILE!!!
+function correspondingAudio(path_to_file) {
+	var filename = (path_to_file.split("/").pop()).slice(0, -5);
+	var filepath = "sounds/" + filename + ".m4a";
+	//console.log("playing audio at path " + filepath);
+	playAudio(filepath);
+}
+
+// Left/right-arrow navigation
+document.onkeydown = function(e) {
+	answerElem = document.getElementById("ex");
+	if ((answerElem == document.activeElement) && (isExDone == false)) {
+		return;
+	}
+	var filecode = (location.pathname.split("/").pop()).slice(0, -5);
+	ge = e || window.event;
+	var z = document.getElementsByClassName("nav");
+	//console.log(z);
+	if (e.keyCode == '37') { // left arrow and h (vim-like bindings)
+		for (let i = 0; i < 3; i++) {
+			var elem = z[i];
+			console.log(z[i].href);
+			if (z[i].innerHTML.includes("Prev")) {
+				window.open(z[i].href, "_top");
+			}
+		}
+  }
+  else if (e.keyCode == '39') { // right arrow l
+		for (let i = 0; i < 3; i++) {
+			var elem = z[i];
+			//console.log(z[i].href);
+			if (z[i].innerHTML.includes("Next")) {
+				window.open(z[i].href, "_top");
+			}
+		}
+	}
+}
+
+// https://www.quora.com/How-can-I-check-if-an-input-field-has-a-certain-text-value-with-JavaScript
+function checkAnswer(response, answer) {
+	isExDone = false;
+	//console.log("user entered" + response.value + ", answer is " + answer);
+	//console.log (response.value == answer);
+	//var answerElem = document.activeElement;
+	//var answerElem = stripDiacritics(document.getElementById("ex"));
+	var answerElem = document.getElementById("ex");
+
+	console.log("input " +  stripDiacritics(response.value))
+	console.log("answer: " + stripDiacritics(answer))
+	console.log(stripDiacritics(response.value) == stripDiacritics(answer))
+	if (stripDiacritics(response.value) == stripDiacritics(answer)) {
+    answerElem.readOnly = true;
+		answerElem.style.color = "green"
+		isExDone = true;
+	}
+	else {
+		isExDone = false;
+	}
+}
+
+// allows inserting letters that dont exist on the user's keyboard like ñ
+function insertLetter(l) {
+	var answerElem = document.getElementById("ex");
+	answerElem.value += l;
+}
+
+// strips a given string of any diacritics
+// this allows for more lenient answer-checking
+function stripDiacritics(str) {
+	// replace nasals
+	let result = str.toLowerCase();	
+	// replace y with e for leniency
+	result = result.replace(/y/g, "e");
+
+	result = result.replace(/ṅ/g, "m");
+	result = result.replace(/ñ/g, "m");
+	result = result.replace(/n/g, "m");
+	result = result.replace(/ṇ/g, "m");
+	result = result.replace(/ṁ/g, "m");
+	result = result.replace(/n̆/g, "m");
+
+	// replace retroflexes
+	result = result.replace(/ṭ/g, "t");
+	result = result.replace(/ḍ/g, "d");
+	result = result.replace(/ḷ/g, "l");
+	
+	// replace aspirates
+	result = result.replace	(/kh/g, "k");
+	result = result.replace	(/gh/g, "g");
+	result = result.replace	(/ch/g, "c");
+	result = result.replace	(/th/g, "t");
+	result = result.replace	(/dh/g, "d");
+	result = result.replace	(/ṭh/g, "t");
+	result = result.replace	(/ḍh/g, "d");
+	result = result.replace	(/ph/g, "p");
+	result = result.replace	(/bh/g, "b");
+
+	// replace vowels
+	result = result.replace(/ā/g, "a");
+	result = result.replace(/ī/g, "e");
+	result = result.replace(/i/g, "e");
+	result = result.replace(/ū/g, "u");
+	result = result.replace(/ṛ/g, "r");
+	result = result.replace(/ē/g, "e");
+	result = result.replace(/ō/g, "u");
+	result = result.replace(/o/g, "u");
+
+	result = result.replace(/aa/g, "a");
+	result = result.replace(/ii/g, "e");
+	result = result.replace(/uu/g, "u");
+	result = result.replace(/ee/g, "e");
+	// the above change is done so that "veedu" works as a substitute for "vidu"
+
+	// replace silibants and other misc
+	result = result.replace(/sh/g, "s");
+	result = result.replace(/ṣ/g, "s");
+	result = result.replace(/ś/g, "s");
+	result = result.replace(/ḥ/g, "h");
+
+	// replace double consanants
+
+	result = result.replace(/kk/g, "k");
+	result = result.replace(/gg/g, "g");
+
+	result = result.replace(/cc/g, "c");
+	result = result.replace(/jj/g, "j");
+	
+	result = result.replace(/tt/g, "t");
+	result = result.replace(/dd/g, "d");
+	
+	result = result.replace(/pp/g, "p");
+	result = result.replace(/bb/g, "b");
+
+	result = result.replace(/yy/g, "y");
+	result = result.replace(/rr/g, "r");
+	result = result.replace(/ll/g, "l");
+	result = result.replace(/vv/g, "v");
+	result = result.replace(/ss/g, "s");
+
+	// replace "c" with "k"
+	result = result.replace(/c/g, "k");
+
+	return result;
+}
