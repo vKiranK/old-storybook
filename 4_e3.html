@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>telugustorybook</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/flick/jquery-ui.css" />
+	<link href="style.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8"/>
+</head>
+
+<body>
+	<p>
+	idi
+	<input type="text" id="ex" onkeyup="checkAnswer(this, 'kukka')" style='width: 150px;'> .
+	</p>
+
+	<button onclick="insertLetter('ā')" type="button" class="diacritic">ā</button>
+	<button onclick="insertLetter('ī')" type="button" class="diacritic">ī</button>
+	<button onclick="insertLetter('ū')" type="button" class="diacritic">ū</button>
+	<button onclick="insertLetter('ē')" type="button" class="diacritic">ē</button>
+	<button onclick="insertLetter('ō')" type="button" class="diacritic">ō</button>
+	<button onclick="insertLetter('ṭ')" type="button" class="diacritic">ṭ</button>
+	<button onclick="insertLetter('ḍ')" type="button" class="diacritic">ḍ</button>
+	<button onclick="insertLetter('ṇ')" type="button" class="diacritic">ṇ</button>
+	<button onclick="insertLetter('ṁ')" type="button" class="diacritic">ṁ</button>
+	<button onclick="insertLetter('ḷ')" type="button" class="diacritic">ḷ</button>
+	<button onclick="insertLetter('ṣ')" type="button" class="diacritic">ṣ</button>
+	<br>
+
+	<img src="dogeating.jpg" width="448" alt="a dog">
+
+	<br>
+
+	<div id="eng_trans" class="english" style="display:none">
+	kukka
+	</div> 
+
+ 	<button id="showEng" onclick="showEnglish()">Show Answer</button>
+	<br>
+
+	<a href="4_e2.html" class="nav">Prev</a>
+	<a href="4_e4.html" class="nav">Next</a>
+	<a href="home.html" class="nav">Home</a>
+	
+	<div id="dialog" title=""></div>
+	<script src="script.js"></script>	
+</body>
+</html>
